@@ -23,9 +23,6 @@ ADD ~/.ssh/id_rsa /root/.ssh/id_rsa
 RUN chmod 700 /root/.ssh/id_rsa
 RUN echo "Host github.com\n\tStrictHostKeyChecking no\n" >> /root/.ssh/config
 
-# Clone maudit repo
-RUN git clone git@github.com:mdsol/maudit.git
-
 ADD ./maudit /maudit
 WORKDIR /maudit
 RUN /bin/bash -l -c "bundle install"
