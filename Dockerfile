@@ -15,8 +15,13 @@ RUN /bin/bash -l -c "rvm requirements"
 RUN /bin/bash -l -c "rvm install 2.1.0"
 RUN /bin/bash -l -c "gem install bundler --no-ri --no-rdoc"
 
-# Add configuration files in repository to filesystem
-RUN /bin/bash -l -c "git clone git@github.com:mdsol/maudit.git"
+# Setup GitHub SSH Keys
+RUN mkdir -p /root/.ssh/
+ADD ./id_rsa /root/.ssh/id_rsa
+
+# Clone maudit repo
+RUN git clone git@github.com:mdsol/maudit.git
+
 ADD ./maudit /maudit
 WORKDIR /maudit
 RUN /bin/bash -l -c "bundle install"
