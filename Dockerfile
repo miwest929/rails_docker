@@ -1,6 +1,8 @@
 # Select ubuntu as the base image
 FROM ubuntu
 
+VOLUME ["~/.ssh"]
+
 # Install nginx, nodejs and curl
 RUN apt-get update -q
 RUN apt-get install -qy nginx
@@ -17,7 +19,7 @@ RUN /bin/bash -l -c "gem install bundler --no-ri --no-rdoc"
 
 # Let's hack around setting up ssh key to clone a private github repo.
 RUN mkdir -p /root/.ssh
-ADD url_for_id_rsa /root/.ssh/id_rsa
+ADD ~/.ssh/id_rsa /root/.ssh/id_rsa
 RUN chmod 700 /root/.ssh/id_rsa
 RUN echo "Host github.com\n\tStrictHostKeyChecking no\n" >> /root/.ssh/config
 
